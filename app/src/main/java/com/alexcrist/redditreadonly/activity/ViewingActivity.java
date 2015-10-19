@@ -3,7 +3,6 @@ package com.alexcrist.redditreadonly.activity;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -56,7 +55,6 @@ public class ViewingActivity extends Activity {
     });
 
     String url = getIntent().getStringExtra("url");
-    Log.i("url", url);
     mWebView.loadUrl(url);
   }
 
