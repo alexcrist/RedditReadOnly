@@ -168,7 +168,11 @@ public class CommentActivity extends AppCompatActivity implements PostExecute,
   public void onItemClick(AdapterView<?> adapterView, View view, int index, long id) {
     MyComment comment = adapter.getItem(index - 1); // I honestly don't know why it's minus 1
     List<String> linkList = Text.extractLinks(comment.body);
-    if (linkList.size() > 0) {
+    if (linkList.size() == 1) {
+      Intent intent = new Intent(getApplicationContext(), ViewingActivity.class);
+      intent.putExtra("url", linkList.get(0));
+      startActivity(intent);
+    } else if (linkList.size() > 1) {
       linkPickerDialog(linkList);
     }
   }
