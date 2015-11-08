@@ -187,7 +187,6 @@ public class CommentActivity extends AppCompatActivity implements PostExecute {
       linkPickerDialog(linkList);
     }
   }
-  }
 
   private void linkPickerDialog(final List<String> linkList) {
     String[] linkArray = new String[linkList.size()];
