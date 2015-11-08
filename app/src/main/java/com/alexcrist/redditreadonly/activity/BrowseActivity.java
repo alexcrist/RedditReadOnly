@@ -3,6 +3,9 @@ package com.alexcrist.redditreadonly.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
@@ -72,6 +75,29 @@ public class BrowseActivity extends AppCompatActivity implements AdapterView.OnI
     listView.setOnMenuItemClickListener(this);
     listView.setOnScrollListener(this);
     listView.setAdapter(adapter);
+  }
+
+  // Menu
+  // -----------------------------------------------------------------------------------------------
+
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    MenuInflater inflater = getMenuInflater();
+    inflater.inflate(R.menu.browse_menu, menu);
+    return true;
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+      case R.id.refresh:
+        startActivity(getIntent());
+        finish();
+        return true;
+
+      default:
+        return false;
+    }
   }
 
   // Load a page of submissions
