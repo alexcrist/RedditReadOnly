@@ -42,11 +42,15 @@ public class BrowseActivity extends AppCompatActivity implements AdapterView.OnI
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_browse);
 
-    progressBar = (ProgressBarIndeterminate) findViewById(R.id.progressBar);
+
     RedditClient redditClient = ((MyApplication) this.getApplication()).getRedditClient();
     paginator = new SubredditPaginator(redditClient);
     adapter = new SubmissionAdapter(this, R.layout.submission_layout, new ArrayList<Submission>());
     initListView();
+
+
+    progressBar = (ProgressBarIndeterminate) findViewById(R.id.progressBar);
+    progressBar.setVisibility(ProgressBar.VISIBLE);
     loading = false;
     loadPage();
   }
@@ -77,7 +81,6 @@ public class BrowseActivity extends AppCompatActivity implements AdapterView.OnI
     if (((MyApplication) this.getApplication()).getRedditClient().isAuthenticated()) {
       if (!loading) {
         loading = true;
-        progressBar.setVisibility(ProgressBar.VISIBLE);
         new LoadPage(this, paginator, adapter).execute();
       }
     } else {
