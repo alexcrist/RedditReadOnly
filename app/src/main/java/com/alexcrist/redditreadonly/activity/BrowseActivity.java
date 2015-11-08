@@ -44,7 +44,7 @@ public class BrowseActivity extends AppCompatActivity implements AdapterView.OnI
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_browse);
-
+    setTitle("Front Page");
 
     RedditClient redditClient = ((MyApplication) this.getApplication()).getRedditClient();
     paginator = new SubredditPaginator(redditClient);

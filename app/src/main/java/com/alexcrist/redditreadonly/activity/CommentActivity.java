@@ -53,6 +53,7 @@ public class CommentActivity extends AppCompatActivity implements PostExecute {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_comment);
+    setTitle("Comments");
 
     listView = (ListView) findViewById(R.id.commentListView);
     progressBar = (ProgressBarIndeterminate) findViewById(R.id.progressBar);
