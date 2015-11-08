@@ -37,8 +37,7 @@ import net.dean.jraw.models.Submission;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CommentActivity extends AppCompatActivity implements PostExecute,
-    AdapterView.OnItemClickListener {
+public class CommentActivity extends AppCompatActivity implements PostExecute {
 
   private Submission submission;
   private List<MyComment> list;
@@ -131,7 +130,14 @@ public class CommentActivity extends AppCompatActivity implements PostExecute,
       LinearLayout header = (LinearLayout) inflater.inflate(R.layout.self_text_layout,
           listView, false);
       TextView body = (TextView) header.findViewById(R.id.body);
-      body.setText(Text.format(submission.getSelftext()));
+      final String selfText = Text.format(submission.getSelftext());
+      body.setText(selfText);
+      header.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+          onLinkClick(selfText);
+        }
+      });
       listView.addHeaderView(header);
     }
   }
@@ -141,7 +147,14 @@ public class CommentActivity extends AppCompatActivity implements PostExecute,
     explodeNode(rootNode, 0);
     adapter = new CommentAdapter(this, R.layout.comment_layout, list,
         submission);
-    listView.setOnItemClickListener(this);
+    listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+      @Override
+      public void onItemClick(AdapterView<?> adapterView, View view, int index, long id) {
+        int offset = submission.isSelfPost() ? 0 : 1;
+        MyComment comment = adapter.getItem(index - offset);
+        onLinkClick(comment.body);
+      }
+    });
     listView.setAdapter(adapter);
   }
 
@@ -164,10 +177,8 @@ public class CommentActivity extends AppCompatActivity implements PostExecute,
   // On user click
   // -----------------------------------------------------------------------------------------------
 
-  @Override
-  public void onItemClick(AdapterView<?> adapterView, View view, int index, long id) {
-    MyComment comment = adapter.getItem(index - 1); // I honestly don't know why it's minus 1
-    List<String> linkList = Text.extractLinks(comment.body);
+  private void onLinkClick(String text) {
+    List<String> linkList = Text.extractLinks(text);
     if (linkList.size() == 1) {
       Intent intent = new Intent(getApplicationContext(), ViewingActivity.class);
       intent.putExtra("url", linkList.get(0));
@@ -175,6 +186,7 @@ public class CommentActivity extends AppCompatActivity implements PostExecute,
     } else if (linkList.size() > 1) {
       linkPickerDialog(linkList);
     }
+  }
   }
 
   private void linkPickerDialog(final List<String> linkList) {
