@@ -61,7 +61,7 @@ public class CommentActivity extends AppCompatActivity implements PostExecute,
     list = new ArrayList<>();
     RedditClient redditClient = ((MyApplication) this.getApplication()).getRedditClient();
     String id = getIntent().getStringExtra("submissionId");
-    new LoadSubmission(redditClient, id, this, this).execute();
+    new LoadSubmission(this, redditClient, id, this).execute();
   }
 
   @Override

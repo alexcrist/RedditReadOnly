@@ -46,7 +46,7 @@ public class MyApplication extends Application {
       @Override
       public void onPageStarted(WebView view, String url, Bitmap favicon) {
         if (url.contains("code=")) {
-          new UserChallengeTask(helper, creds, redditClient, MyApplication.this, post).execute(url);
+          new UserChallengeTask(post, helper, creds, redditClient, MyApplication.this).execute(url);
         }
       }
     });
@@ -55,7 +55,7 @@ public class MyApplication extends Application {
   public void reauthenticate(final PostExecute post) {
     try {
       redditClient.getOAuthHelper().setRefreshToken(getToken());
-      new RefreshToken(creds, redditClient, this, post).execute();
+      new RefreshToken(post, creds, redditClient, this).execute();
     } catch (Exception e) {
       e.printStackTrace();
     }

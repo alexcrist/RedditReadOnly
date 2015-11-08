@@ -78,7 +78,7 @@ public class BrowseActivity extends AppCompatActivity implements AdapterView.OnI
       if (!loading) {
         loading = true;
         progressBar.setVisibility(ProgressBar.VISIBLE);
-        new LoadPage(paginator, adapter, this).execute();
+        new LoadPage(this, paginator, adapter).execute();
       }
     } else {
       ((MyApplication) this.getApplication()).reauthenticate(new PostExecute() {

@@ -1,36 +1,33 @@
 package com.alexcrist.redditreadonly.loader;
 
-import android.os.AsyncTask;
-
 import com.alexcrist.redditreadonly.PostExecute;
 import com.alexcrist.redditreadonly.activity.CommentActivity;
 
 import net.dean.jraw.RedditClient;
 import net.dean.jraw.models.Submission;
 
-public class LoadSubmission extends AsyncTask<String, Void, Submission> {
+public class LoadSubmission extends Load<Submission> {
 
   private RedditClient redditClient;
   private String id;
   private CommentActivity activity;
-  private PostExecute post;
 
   // Constructors
   // -----------------------------------------------------------------------------------------------
 
-  public LoadSubmission(RedditClient redditClient, String id, CommentActivity activity,
-                        PostExecute post) {
+  public LoadSubmission(PostExecute post, RedditClient redditClient, String id,
+                        CommentActivity activity) {
+    super(post);
     this.redditClient = redditClient;
     this.id = id;
     this.activity = activity;
-    this.post = post;
   }
 
   // Do this task on background thread
   // -----------------------------------------------------------------------------------------------
 
   @Override
-  protected Submission doInBackground(String... params) {
+  protected Submission onLoad(String... params) {
     return redditClient.getSubmission(id);
   }
 
@@ -38,8 +35,7 @@ public class LoadSubmission extends AsyncTask<String, Void, Submission> {
   // -----------------------------------------------------------------------------------------------
 
   @Override
-  protected void onPostExecute(Submission submission) {
+  protected void onPost(Submission submission) {
     activity.setSubmission(submission);
-    post.onPostExecute();
   }
 }

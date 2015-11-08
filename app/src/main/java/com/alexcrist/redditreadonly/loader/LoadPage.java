@@ -1,7 +1,5 @@
 package com.alexcrist.redditreadonly.loader;
 
-import android.os.AsyncTask;
-
 import com.alexcrist.redditreadonly.PostExecute;
 import com.alexcrist.redditreadonly.adapter.SubmissionAdapter;
 
@@ -9,26 +7,25 @@ import net.dean.jraw.models.Listing;
 import net.dean.jraw.models.Submission;
 import net.dean.jraw.paginators.SubredditPaginator;
 
-public class LoadPage extends AsyncTask<String, Void, Listing<Submission>> {
+public class LoadPage extends Load<Listing<Submission>> {
 
   private SubredditPaginator paginator;
   private SubmissionAdapter adapter;
-  private PostExecute post;
 
   // Constructors
   // -----------------------------------------------------------------------------------------------
 
-  public LoadPage(SubredditPaginator paginator, SubmissionAdapter adapter, PostExecute post) {
+  public LoadPage(PostExecute post, SubredditPaginator paginator, SubmissionAdapter adapter) {
+    super(post);
     this.paginator = paginator;
     this.adapter = adapter;
-    this.post = post;
   }
 
   // Do this task on background thread
   // -----------------------------------------------------------------------------------------------
 
   @Override
-  protected Listing<Submission> doInBackground(String... params) {
+  protected Listing<Submission> onLoad(String... params) {
     try {
       return paginator.next();
     } catch (Exception e) {
@@ -41,12 +38,9 @@ public class LoadPage extends AsyncTask<String, Void, Listing<Submission>> {
   // -----------------------------------------------------------------------------------------------
 
   @Override
-  protected void onPostExecute(Listing<Submission> listing) {
-    if (listing != null) {
-      for (Submission submission : listing) {
-        adapter.add(submission);
-      }
+  protected void onPost(Listing<Submission> listing) {
+    for (Submission submission : listing) {
+      adapter.add(submission);
     }
-    post.onPostExecute();
   }
 }
