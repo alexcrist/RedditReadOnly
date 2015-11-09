@@ -26,6 +26,7 @@ Entirely read-only with no write features (upvoting, downvoting, commenting, pos
  - abstract comment and submission vies
  - custom color theme options
  - browse without logging in
+ - display if post or comment has been edited
 
 **Known Bugs**
  - refresh button loads next page
