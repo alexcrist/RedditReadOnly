@@ -1,5 +1,6 @@
 package com.alexcrist.redditreadonly.loader;
 
+import android.app.Activity;
 import android.util.Log;
 import android.view.Menu;
 
@@ -18,11 +19,11 @@ import java.util.List;
 
 public class LoadSubreddits extends Load<List<String>> {
 
-  BrowseActivity activity;
+  Activity activity;
   UserSubredditsPaginator subredditPaginator;
   Menu menu;
 
-  public LoadSubreddits(PostExecute post, BrowseActivity activity, RedditClient redditClient,
+  public LoadSubreddits(PostExecute post, Activity activity, RedditClient redditClient,
                         Menu menu) {
     super(post);
     this.activity = activity;

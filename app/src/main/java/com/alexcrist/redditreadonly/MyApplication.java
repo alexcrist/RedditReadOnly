@@ -8,6 +8,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.alexcrist.redditreadonly.loader.RefreshToken;
+import com.alexcrist.redditreadonly.loader.RevokeToken;
 import com.alexcrist.redditreadonly.loader.UserChallengeTask;
 
 import net.dean.jraw.RedditClient;
@@ -71,6 +72,10 @@ public class MyApplication extends Application {
     SharedPreferences.Editor editor = prefs.edit();
     editor.putString("token", redditClient.getOAuthHelper().getRefreshToken());
     editor.apply();
+  }
+
+  public void deauthenticate(PostExecute post) {
+    new RevokeToken(post, redditClient, creds, getApplicationContext());
   }
 
   // Getters and setters

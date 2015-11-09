@@ -20,6 +20,7 @@ import com.alexcrist.redditreadonly.R;
 import com.alexcrist.redditreadonly.adapter.SubmissionAdapter;
 import com.alexcrist.redditreadonly.loader.LoadPage;
 import com.alexcrist.redditreadonly.loader.LoadSubreddits;
+import com.alexcrist.redditreadonly.loader.RevokeToken;
 import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
 import com.baoyz.swipemenulistview.SwipeMenuItem;
@@ -107,6 +108,8 @@ public class BrowseActivity extends AppCompatActivity implements AdapterView.OnI
   public boolean onOptionsItemSelected(MenuItem item) {
     if (item.getItemId() == R.id.refresh) {
       refresh();
+    } else if (item.getItemId() == R.id.logout) {
+      logout();
     } else if (0 <= item.getItemId()) {
       List<String> subredditNames = ((MyApplication) getApplication()).getSubredditNames();
       if (subredditNames != null) {
@@ -221,11 +224,26 @@ public class BrowseActivity extends AppCompatActivity implements AdapterView.OnI
     }
   }
 
-  // Refresh page
+  // Refresh
   // -----------------------------------------------------------------------------------------------
 
   private void refresh() {
-    startActivity(getIntent());
     finish();
+    startActivity(getIntent());
+  }
+
+  // Refresh
+  // -----------------------------------------------------------------------------------------------
+
+  private void logout() {
+    final Intent intent = new Intent(this, LoginActivity.class);
+    finish();
+    ((MyApplication) getApplication()).deauthenticate(new PostExecute() {
+      @Override
+      public void onPostExecute() {
+        finish();
+        startActivity(intent);
+      }
+    });
   }
 }
