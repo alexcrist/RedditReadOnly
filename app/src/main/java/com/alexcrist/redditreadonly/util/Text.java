@@ -8,6 +8,7 @@ public class Text {
   // Static utility methods
   // -----------------------------------------------------------------------------------------------
 
+  // replaces common string codes with corresponding strings
   public static String format(String str) {
     str = str.replace("&amp;", "&");
     str = str.replace("&gt;", ">");
@@ -16,6 +17,7 @@ public class Text {
     return str;
   }
 
+  // return list of links contained in given strings
   public static List<String> extractLinks(String str) {
     List<String> links = new ArrayList<>();
     for (int i = 0; i < str.length() - 4; i++) {

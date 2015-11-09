@@ -23,6 +23,9 @@ public class LoadSubreddits extends Load<List<String>> {
   UserSubredditsPaginator subredditPaginator;
   Menu menu;
 
+  // Constructors
+  // -----------------------------------------------------------------------------------------------
+
   public LoadSubreddits(PostExecute post, Activity activity, RedditClient redditClient,
                         Menu menu) {
     super(post);
@@ -31,6 +34,9 @@ public class LoadSubreddits extends Load<List<String>> {
     this.subredditPaginator.setLimit(100);
     this.menu = menu;
   }
+
+  // Do this task on background thread
+  // -----------------------------------------------------------------------------------------------
 
   @Override
   protected List<String> onLoad(String... params) {
@@ -46,11 +52,17 @@ public class LoadSubreddits extends Load<List<String>> {
     }
   }
 
+  // Do this after executing task
+  // -----------------------------------------------------------------------------------------------
+
   @Override
   protected void onPost(List<String> subredditNames) {
     LoadSubreddits.setSubredditNames(menu, subredditNames);
     ((MyApplication) activity.getApplication()).setSubredditNames(subredditNames);
   }
+
+  // Populate a menu with given list of subreddit names
+  // -----------------------------------------------------------------------------------------------
 
   public static void setSubredditNames(Menu menu, List<String> subredditNames) {
     Collections.sort(subredditNames);
