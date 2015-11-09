@@ -27,6 +27,7 @@ Entirely read-only with no write features (upvoting, downvoting, commenting, pos
  - custom color theme options
  - browse without logging in
  - display if post or comment has been edited
+ - indicate stickied posts
 
 **Known Bugs**
  - refresh button loads next page
