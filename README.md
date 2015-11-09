@@ -1,11 +1,12 @@
 # RedditReadOnly
 
-A lightweight Reddit app for Android. No write features i.e.: upvoting, downvoting, commenting, posting. Viewing only.
+**A lightweight Reddit app for Android.**
+Entirely read-only with no write features i.e.: upvoting, downvoting, commenting, posting.
 
 <a href="Screenshot 1"><img src="./screenshot1.png" height="500" width="281" ></a>
 <a href="Screenshot 2"><img src="./screenshot2.png" height="500" width="281" ></a>
 
-*Current Features*
+**Current Features**
  - view submissions with thumbnails
  - go to submission link
  - go to comments
@@ -13,7 +14,7 @@ A lightweight Reddit app for Android. No write features i.e.: upvoting, downvoti
  - refresh submissions
  - go to a subscribed subreddit
 
-*Feature Wishlist*
+**Feature Wishlist**
  - subreddit search
  - refresh comments
  - load all comments
@@ -26,7 +27,7 @@ A lightweight Reddit app for Android. No write features i.e.: upvoting, downvoti
  - custom color theme options
  - browse without logging in
 
-*Known Bugs*
+**Known Bugs**
  - refresh button loads next page
  - crash on reauthentication
  - bestof links don't load properly
