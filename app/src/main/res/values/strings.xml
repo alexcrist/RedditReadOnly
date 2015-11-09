@@ -2,4 +2,6 @@
   <string name="app_name">Reddit</string>
   <string name="nsfw">nsfw</string>
   <string name="refresh">refresh</string>
+  <string name="subreddits">subreddits</string>
+  <string name="loading">&#8230;</string>
 </resources>

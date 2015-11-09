@@ -7,14 +7,12 @@ import com.alexcrist.redditreadonly.PostExecute;
 public abstract class Load<T> extends AsyncTask<String, Void, T> {
 
   private PostExecute post;
-  private int attempts;
 
   // Constructors
   // -----------------------------------------------------------------------------------------------
 
   public Load(PostExecute post) {
     this.post = post;
-    this.attempts = 0;
   }
 
   // Do this task on background thread
@@ -22,7 +20,7 @@ public abstract class Load<T> extends AsyncTask<String, Void, T> {
 
   @Override
   protected T doInBackground(String... params) {
-    return onLoad();
+    return onLoad(params);
   }
 
   protected abstract T onLoad(String... params);
@@ -32,14 +30,11 @@ public abstract class Load<T> extends AsyncTask<String, Void, T> {
 
   @Override
   protected void onPostExecute(T t) {
-    if (t == null) {
-      if (attempts < 3) {
-        attempts++;
-        execute();
-      }
-    } else {
+    if (t != null) {
       onPost(t);
-      post.onPostExecute();
+      if (post != null) {
+        post.onPostExecute();
+      }
     }
   }
 

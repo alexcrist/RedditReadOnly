@@ -14,12 +14,14 @@ import net.dean.jraw.RedditClient;
 import net.dean.jraw.http.UserAgent;
 import net.dean.jraw.http.oauth.Credentials;
 import net.dean.jraw.http.oauth.OAuthHelper;
+import net.dean.jraw.paginators.SubredditPaginator;
 
 import java.net.URL;
 
 public class MyApplication extends Application {
 
   private RedditClient redditClient;
+  private SubredditPaginator paginator;
   private final Credentials creds = Credentials.installedApp("Ro5hyBovsBCewA", "http://blank.org");
   private final UserAgent userAgent = UserAgent.of("android", "com.alexcrist.redditreadonly", "0.1",
       "RedditReadOnly");
@@ -31,6 +33,7 @@ public class MyApplication extends Application {
   public void onCreate() {
     super.onCreate();
     redditClient = new RedditClient(userAgent);
+    paginator = new SubredditPaginator(redditClient);
   }
 
   // Authentication
@@ -38,7 +41,7 @@ public class MyApplication extends Application {
 
   public void authenticate(WebView webView, final PostExecute post) {
     final OAuthHelper helper = redditClient.getOAuthHelper();
-    String[] scopes = { "identity", "read" };
+    String[] scopes = { "identity", "read", "mysubreddits" };
     URL authUrl = helper.getAuthorizationUrl(creds, true, true, scopes);
     webView.setVisibility(View.VISIBLE);
     webView.loadUrl(authUrl.toExternalForm());
@@ -50,7 +53,7 @@ public class MyApplication extends Application {
         }
       }
     });
-  }
+   }
 
   public void reauthenticate(final PostExecute post) {
     try {
@@ -73,6 +76,10 @@ public class MyApplication extends Application {
 
   public RedditClient getRedditClient() {
     return redditClient;
+  }
+
+  public SubredditPaginator getPaginator() {
+    return paginator;
   }
 
   public String getToken() {

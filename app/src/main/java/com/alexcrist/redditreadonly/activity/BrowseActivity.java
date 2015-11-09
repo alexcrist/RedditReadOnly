@@ -3,6 +3,7 @@ package com.alexcrist.redditreadonly.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -11,12 +12,14 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.alexcrist.redditreadonly.MyApplication;
 import com.alexcrist.redditreadonly.PostExecute;
 import com.alexcrist.redditreadonly.R;
 import com.alexcrist.redditreadonly.adapter.SubmissionAdapter;
 import com.alexcrist.redditreadonly.loader.LoadPage;
+import com.alexcrist.redditreadonly.loader.LoadSubreddits;
 import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
 import com.baoyz.swipemenulistview.SwipeMenuItem;
@@ -32,10 +35,12 @@ import java.util.ArrayList;
 public class BrowseActivity extends AppCompatActivity implements AdapterView.OnItemClickListener,
   ListView.OnScrollListener, SwipeMenuListView.OnMenuItemClickListener, PostExecute {
 
+  private RedditClient redditClient;
   private SubredditPaginator paginator;
   private SubmissionAdapter adapter;
   private ProgressBarIndeterminate progressBar;
   private boolean loading;
+  public int subredditCount;
 
   // Initialization
   // -----------------------------------------------------------------------------------------------
@@ -44,18 +49,22 @@ public class BrowseActivity extends AppCompatActivity implements AdapterView.OnI
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_browse);
-    setTitle("Front Page");
 
-    RedditClient redditClient = ((MyApplication) this.getApplication()).getRedditClient();
-    paginator = new SubredditPaginator(redditClient);
+    redditClient = ((MyApplication) this.getApplication()).getRedditClient();
+    paginator = ((MyApplication) this.getApplication()).getPaginator();
     adapter = new SubmissionAdapter(this, R.layout.submission_layout, new ArrayList<Submission>());
     initListView();
-
 
     progressBar = (ProgressBarIndeterminate) findViewById(R.id.progressBar);
     progressBar.setVisibility(ProgressBar.VISIBLE);
     loading = false;
     loadPage();
+
+    if (paginator.getSubreddit() == null) {
+      setTitle("Front Page");
+    } else {
+      setTitle(paginator.getSubreddit());
+    }
   }
 
   private void initListView() {
@@ -84,38 +93,39 @@ public class BrowseActivity extends AppCompatActivity implements AdapterView.OnI
   public boolean onCreateOptionsMenu(Menu menu) {
     MenuInflater inflater = getMenuInflater();
     inflater.inflate(R.menu.browse_menu, menu);
+    new LoadSubreddits(null, this, redditClient, menu).execute();
     return true;
   }
 
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
-    switch (item.getItemId()) {
-      case R.id.refresh:
-        startActivity(getIntent());
-        finish();
-        return true;
-
-      default:
-        return false;
+    if (item.getItemId() == R.id.refresh) {
+      refresh();
+    } else if (0 <= item.getItemId() && item.getItemId() < subredditCount) {
+      final String subreddit = item.getTitle().toString();
+      Log.i("Title", subreddit);
+      paginator.setSubreddit(subreddit);
+      paginator.reset();
+      refresh();
     }
+    return super.onOptionsItemSelected(item);
   }
 
   // Load a page of submissions
   // -----------------------------------------------------------------------------------------------
 
   private void loadPage() {
+    loadPage(this);
+  }
+
+  private void loadPage(PostExecute post) {
     if (((MyApplication) this.getApplication()).getRedditClient().isAuthenticated()) {
       if (!loading) {
         loading = true;
-        new LoadPage(this, paginator, adapter).execute();
+        new LoadPage(post, paginator, adapter).execute();
       }
     } else {
-      ((MyApplication) this.getApplication()).reauthenticate(new PostExecute() {
-        @Override
-        public void onPostExecute() {
-          loadPage();
-        }
-      });
+      Toast.makeText(this, "Unauthenticated", Toast.LENGTH_LONG).show();
     }
   }
 
@@ -174,7 +184,13 @@ public class BrowseActivity extends AppCompatActivity implements AdapterView.OnI
   // -----------------------------------------------------------------------------------------------
 
   @Override
-  public void onBackPressed() { }
+  public void onBackPressed() {
+    if (paginator.getSubreddit() != null) {
+      paginator.setSubreddit(null);
+      paginator.reset();
+      refresh();
+    }
+  }
 
   // Go to comments
   // -----------------------------------------------------------------------------------------------
@@ -192,5 +208,13 @@ public class BrowseActivity extends AppCompatActivity implements AdapterView.OnI
         }
       });
     }
+  }
+
+  // Refresh page
+  // -----------------------------------------------------------------------------------------------
+
+  private void refresh() {
+    startActivity(getIntent());
+    finish();
   }
 }
