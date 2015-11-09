@@ -3,6 +3,7 @@ package com.alexcrist.redditreadonly.loader;
 import android.util.Log;
 import android.view.Menu;
 
+import com.alexcrist.redditreadonly.MyApplication;
 import com.alexcrist.redditreadonly.PostExecute;
 import com.alexcrist.redditreadonly.activity.BrowseActivity;
 
@@ -46,13 +47,16 @@ public class LoadSubreddits extends Load<List<String>> {
 
   @Override
   protected void onPost(List<String> subredditNames) {
+    LoadSubreddits.setSubredditNames(menu, subredditNames);
+    ((MyApplication) activity.getApplication()).setSubredditNames(subredditNames);
+  }
+
+  public static void setSubredditNames(Menu menu, List<String> subredditNames) {
     Collections.sort(subredditNames);
     Menu subMenu = menu.getItem(0).getSubMenu();
     subMenu.clear();
-    int i;
-    for (i = 0; i < subredditNames.size(); i++) {
+    for (int i = 0; i < subredditNames.size(); i++) {
       subMenu.addSubMenu(0, i, Menu.NONE, subredditNames.get(i));
     }
-    activity.subredditCount = i + 1;
   }
 }

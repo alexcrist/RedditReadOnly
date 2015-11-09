@@ -17,11 +17,13 @@ import net.dean.jraw.http.oauth.OAuthHelper;
 import net.dean.jraw.paginators.SubredditPaginator;
 
 import java.net.URL;
+import java.util.List;
 
 public class MyApplication extends Application {
 
   private RedditClient redditClient;
   private SubredditPaginator paginator;
+  private List<String> subredditNames; // TODO - these are never refreshed (maybe onAuthenticate?)
   private final Credentials creds = Credentials.installedApp("Ro5hyBovsBCewA", "http://blank.org");
   private final UserAgent userAgent = UserAgent.of("android", "com.alexcrist.redditreadonly", "0.1",
       "RedditReadOnly");
@@ -82,8 +84,16 @@ public class MyApplication extends Application {
     return paginator;
   }
 
+  public List<String> getSubredditNames() {
+    return subredditNames;
+  }
+
   public String getToken() {
     SharedPreferences prefs = getSharedPreferences("main", MODE_PRIVATE);
     return prefs.getString("token", null);
+  }
+
+  public void setSubredditNames(List<String> names) {
+    subredditNames = names;
   }
 }

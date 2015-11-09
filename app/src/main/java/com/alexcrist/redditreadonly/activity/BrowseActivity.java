@@ -31,6 +31,7 @@ import net.dean.jraw.models.Submission;
 import net.dean.jraw.paginators.SubredditPaginator;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class BrowseActivity extends AppCompatActivity implements AdapterView.OnItemClickListener,
   ListView.OnScrollListener, SwipeMenuListView.OnMenuItemClickListener, PostExecute {
@@ -40,7 +41,6 @@ public class BrowseActivity extends AppCompatActivity implements AdapterView.OnI
   private SubmissionAdapter adapter;
   private ProgressBarIndeterminate progressBar;
   private boolean loading;
-  public int subredditCount;
 
   // Initialization
   // -----------------------------------------------------------------------------------------------
@@ -93,7 +93,13 @@ public class BrowseActivity extends AppCompatActivity implements AdapterView.OnI
   public boolean onCreateOptionsMenu(Menu menu) {
     MenuInflater inflater = getMenuInflater();
     inflater.inflate(R.menu.browse_menu, menu);
-    new LoadSubreddits(null, this, redditClient, menu).execute();
+
+    List<String> subredditNames = ((MyApplication) getApplication()).getSubredditNames();
+    if (subredditNames == null) {
+      new LoadSubreddits(null, this, redditClient, menu).execute();
+    } else {
+      LoadSubreddits.setSubredditNames(menu, subredditNames);
+    }
     return true;
   }
 
@@ -101,12 +107,17 @@ public class BrowseActivity extends AppCompatActivity implements AdapterView.OnI
   public boolean onOptionsItemSelected(MenuItem item) {
     if (item.getItemId() == R.id.refresh) {
       refresh();
-    } else if (0 <= item.getItemId() && item.getItemId() < subredditCount) {
-      final String subreddit = item.getTitle().toString();
-      Log.i("Title", subreddit);
-      paginator.setSubreddit(subreddit);
-      paginator.reset();
-      refresh();
+    } else if (0 <= item.getItemId()) {
+      List<String> subredditNames = ((MyApplication) getApplication()).getSubredditNames();
+      if (subredditNames != null) {
+        if (item.getItemId() < subredditNames.size()) {
+          final String subreddit = item.getTitle().toString();
+
+          paginator.setSubreddit(subreddit);
+          paginator.reset();
+          refresh();
+        }
+      }
     }
     return super.onOptionsItemSelected(item);
   }
