@@ -2,7 +2,10 @@
 
 A lightweight Reddit app for Android. No write features i.e.: upvoting, downvoting, commenting, posting. Viewing only.
 
-Current Features:
+<a href="Screenshot 1"><img src="./screenshot1.png" height="500" width="281" ></a>
+<a href="Screenshot 2"><img src="./screenshot2.png" height="500" width="281" ></a>
+
+*Current Features*
  - view submissions with thumbnails
  - go to submission link
  - go to comments
@@ -10,7 +13,7 @@ Current Features:
  - refresh submissions
  - go to a subscribed subreddit
 
-Feature Wishlist:
+*Feature Wishlist*
  - subreddit search
  - refresh comments
  - load all comments
@@ -23,13 +26,10 @@ Feature Wishlist:
  - custom color theme options
  - browse without logging in
 
-Known Bugs:
+*Known Bugs*
  - refresh button loads next page
  - crash on reauthentication
  - bestof links don't load properly
-
-<a href="Screenshot 1"><img src="./screenshot1.png" height="500" width="281" ></a>
-<a href="Screenshot 2"><img src="./screenshot2.png" height="500" width="281" ></a>
  
 <a href="Screenshot 3"><img src="./screenshot3.png" height="500" width="281" ></a>
 <a href="Screenshot 4"><img src="./screenshot4.png" height="500" width="281" ></a>
