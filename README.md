@@ -33,6 +33,7 @@ Entirely read-only with no write features (upvoting, downvoting, commenting, pos
  - crash on reauthentication
  - bestof links don't load properly
  - logout feature not fully functional
+ - opening app without internet connection crashes app
  
 ---
  
