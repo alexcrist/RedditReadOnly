@@ -75,7 +75,7 @@ public class MyApplication extends Application {
   }
 
   public void deauthenticate(PostExecute post) {
-    new RevokeToken(post, redditClient, creds, getApplicationContext());
+    new RevokeToken(post, redditClient, creds, getApplicationContext()).execute();
   }
 
   // Getters and setters

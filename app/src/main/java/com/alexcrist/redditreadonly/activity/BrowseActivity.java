@@ -286,7 +286,6 @@ public class BrowseActivity extends AppCompatActivity implements AdapterView.OnI
 
   private void logout() {
     final Intent intent = new Intent(this, LoginActivity.class);
-    finish();
     ((MyApplication) getApplication()).deauthenticate(new PostExecute() {
       @Override
       public void onPostExecute() {

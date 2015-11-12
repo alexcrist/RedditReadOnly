@@ -43,7 +43,6 @@ public class RevokeToken extends AsyncTask<String, Void, Void> {
 
   @Override
   protected void onPostExecute(Void aVoid) {
-    redditClient.deauthenticate();
     SharedPreferences prefs = context.getSharedPreferences("main", Context.MODE_PRIVATE);
     SharedPreferences.Editor editor = prefs.edit();
     editor.remove("token");
