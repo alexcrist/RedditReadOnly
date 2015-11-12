@@ -5,4 +5,5 @@
   <string name="subreddits">subreddits</string>
   <string name="loading">&#8230;</string>
   <string name="logout">Logout</string>
+  <string name="gotoSubreddit">Goto subreddit</string>
 </resources>

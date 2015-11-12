@@ -16,6 +16,10 @@
         android:icon="@drawable/ic_refresh_white_24dp"
         app:showAsAction="ifRoom"/>
 
+  <item android:id="@+id/gotoSubreddit"
+        android:title="@string/gotoSubreddit"
+        app:showAsAction="never"/>
+
   <item android:id="@+id/logout"
         android:title="@string/logout"
         app:showAsAction="never"/>

@@ -1,7 +1,9 @@
 package com.alexcrist.redditreadonly.activity;
 
+import android.app.AlertDialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,10 +12,15 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
+import android.widget.TableLayout;
 import android.widget.Toast;
 
 import com.alexcrist.redditreadonly.MyApplication;
@@ -110,23 +117,31 @@ public class BrowseActivity extends AppCompatActivity implements AdapterView.OnI
 
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
-    if (item.getItemId() == R.id.refresh) {
-      refresh();
-    } else if (item.getItemId() == R.id.logout) {
-      logout();
-    } else if (0 <= item.getItemId()) {
-      List<String> subredditNames = ((MyApplication) getApplication()).getSubredditNames();
-      if (subredditNames != null) {
-        if (item.getItemId() < subredditNames.size()) {
-          final String subreddit = item.getTitle().toString();
+    switch (item.getItemId()) {
+      case R.id.refresh:
+        refresh();
+        return true;
 
-          paginator.setSubreddit(subreddit);
-          paginator.reset();
-          refresh();
+      case R.id.logout:
+        logout();
+        return true;
+
+      case R.id.gotoSubreddit:
+        gotoSubredditPrompt();
+        return true;
+
+      default:
+        List<String> subredditNames = ((MyApplication) getApplication()).getSubredditNames();
+        if (subredditNames != null) {
+          if (0 <= item.getItemId() && item.getItemId() < subredditNames.size()) {
+            final String subreddit = item.getTitle().toString();
+            paginator.setSubreddit(subreddit);
+            refresh();
+            return true;
+          }
         }
-      }
+        return false;
     }
-    return super.onOptionsItemSelected(item);
   }
 
   // Load a page of submissions
@@ -238,6 +253,25 @@ public class BrowseActivity extends AppCompatActivity implements AdapterView.OnI
     }
   }
 
+  // Go to subreddit
+  // -----------------------------------------------------------------------------------------------
+
+  private void gotoSubredditPrompt() {
+    final EditText editText = new EditText(this);
+    new AlertDialog.Builder(this)
+        .setTitle("Subreddit")
+        .setView(editText)
+        .setPositiveButton("Go", new DialogInterface.OnClickListener() {
+          @Override
+          public void onClick(DialogInterface dialogInterface, int i) {
+            paginator.setSubreddit(editText.getText().toString());
+            refresh();
+          }
+        })
+        .setNegativeButton("Cancel", null)
+        .show();
+  }
+
   // Refresh
   // -----------------------------------------------------------------------------------------------
 
@@ -247,7 +281,7 @@ public class BrowseActivity extends AppCompatActivity implements AdapterView.OnI
     startActivity(getIntent());
   }
 
-  // Refresh
+  // Logout
   // -----------------------------------------------------------------------------------------------
 
   private void logout() {
