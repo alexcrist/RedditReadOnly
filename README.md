@@ -30,7 +30,6 @@ Entirely read-only with no write features (upvoting, downvoting, commenting, pos
  - indicate stickied posts
 
 **Known Bugs**
- - refresh button loads next page
  - crash on reauthentication
  - bestof links don't load properly
  - logout feature not fully functional
