@@ -18,8 +18,7 @@ Entirely read-only with no write features (upvoting, downvoting, commenting, pos
  - subreddit search
  - refresh comments
  - load all comments
- - improved comment formatting 
- - logout feature
+ - improved comment formatting
  - option for dark theme
  - trending subreddits
  - gilded count display
@@ -28,11 +27,13 @@ Entirely read-only with no write features (upvoting, downvoting, commenting, pos
  - browse without logging in
  - display if post or comment has been edited
  - indicate stickied posts
+ - get link of post on long click
 
 **Known Bugs**
  - refresh button loads next page
  - crash on reauthentication
  - bestof links don't load properly
+ - logout feature not fully functional
  
 ---
  
