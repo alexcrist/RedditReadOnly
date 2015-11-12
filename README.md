@@ -23,7 +23,7 @@ Entirely read-only with no write features (upvoting, downvoting, commenting, pos
  - option for dark theme
  - trending subreddits
  - gilded count display
- - abstract comment and submission vies
+ - abstract comment and submission views
  - custom color theme options
  - browse without logging in
  - display if post or comment has been edited
