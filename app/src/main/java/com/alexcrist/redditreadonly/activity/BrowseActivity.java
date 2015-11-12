@@ -1,5 +1,7 @@
 package com.alexcrist.redditreadonly.activity;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -35,7 +37,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BrowseActivity extends AppCompatActivity implements AdapterView.OnItemClickListener,
-  ListView.OnScrollListener, SwipeMenuListView.OnMenuItemClickListener, PostExecute {
+    AdapterView.OnItemLongClickListener, ListView.OnScrollListener,
+    SwipeMenuListView.OnMenuItemClickListener, PostExecute {
 
   private RedditClient redditClient;
   private SubredditPaginator paginator;
@@ -82,6 +85,7 @@ public class BrowseActivity extends AppCompatActivity implements AdapterView.OnI
     SwipeMenuListView listView = (SwipeMenuListView) findViewById(R.id.submissionListView);
     listView.setMenuCreator(creator);
     listView.setOnItemClickListener(this);
+    listView.setOnItemLongClickListener(this);
     listView.setOnMenuItemClickListener(this);
     listView.setOnScrollListener(this);
     listView.setAdapter(adapter);
@@ -162,6 +166,16 @@ public class BrowseActivity extends AppCompatActivity implements AdapterView.OnI
       intent.putExtra("url", submission.getUrl());
       startActivity(intent);
     }
+  }
+
+  @Override
+  public boolean onItemLongClick(AdapterView<?> parent, View view, int index, long id) {
+    Submission submission = adapter.getItem(index);
+    ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+    ClipData clip = ClipData.newPlainText("url", submission.getUrl());
+    clipboard.setPrimaryClip(clip);
+    Toast.makeText(this, "URL copied to clipboard.", Toast.LENGTH_SHORT).show();
+    return true;
   }
 
   @Override
