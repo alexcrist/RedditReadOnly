@@ -13,6 +13,7 @@ Entirely read-only with no write features (upvoting, downvoting, commenting, pos
  - click links in comments or self-text
  - refresh submissions
  - go to a subscribed subreddit
+ - get link of post on long click
 
 **Feature Wishlist**
  - subreddit search
@@ -27,7 +28,6 @@ Entirely read-only with no write features (upvoting, downvoting, commenting, pos
  - browse without logging in
  - display if post or comment has been edited
  - indicate stickied posts
- - get link of post on long click
 
 **Known Bugs**
  - refresh button loads next page
