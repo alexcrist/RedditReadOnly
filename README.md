@@ -14,10 +14,10 @@ Entirely read-only with no write features (upvoting, downvoting, commenting, pos
  - refresh submissions
  - go to a subscribed subreddit
  - get link of post on long click
-
-**Feature Wishlist**
  - subreddit search
  - refresh comments
+
+**Feature Wishlist**
  - load all comments
  - improved comment formatting
  - option for dark theme
