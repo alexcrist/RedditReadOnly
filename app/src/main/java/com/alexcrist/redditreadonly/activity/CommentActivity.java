@@ -7,6 +7,9 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -20,6 +23,7 @@ import com.alexcrist.redditreadonly.PostExecute;
 import com.alexcrist.redditreadonly.R;
 import com.alexcrist.redditreadonly.adapter.CommentAdapter;
 import com.alexcrist.redditreadonly.loader.LoadSubmission;
+import com.alexcrist.redditreadonly.loader.LoadSubreddits;
 import com.alexcrist.redditreadonly.model.MyComment;
 import com.alexcrist.redditreadonly.util.Text;
 import com.gc.materialdesign.views.ProgressBarIndeterminate;
@@ -175,6 +179,28 @@ public class CommentActivity extends AppCompatActivity implements PostExecute {
     }
   }
 
+  // Menu
+  // -----------------------------------------------------------------------------------------------
+
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    MenuInflater inflater = getMenuInflater();
+    inflater.inflate(R.menu.comment_menu, menu);
+    return true;
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+      case R.id.refresh:
+        refresh();
+        return true;
+
+      default:
+        return false;
+    }
+  }
+
   // On user click
   // -----------------------------------------------------------------------------------------------
 
@@ -203,6 +229,14 @@ public class CommentActivity extends AppCompatActivity implements PostExecute {
           }
         });
     builder.show();
+  }
+
+  // Refresh
+  // -----------------------------------------------------------------------------------------------
+
+  private void refresh() {
+    finish();
+    startActivity(getIntent());
   }
 
   // Getters and setters
