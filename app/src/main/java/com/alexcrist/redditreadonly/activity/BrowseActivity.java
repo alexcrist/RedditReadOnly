@@ -242,6 +242,7 @@ public class BrowseActivity extends AppCompatActivity implements AdapterView.OnI
   // -----------------------------------------------------------------------------------------------
 
   private void refresh() {
+    paginator.reset();
     finish();
     startActivity(getIntent());
   }
