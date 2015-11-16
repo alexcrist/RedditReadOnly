@@ -28,6 +28,9 @@ Entirely read-only with no write features (upvoting, downvoting, commenting, pos
  - browse without logging in
  - display if post or comment has been edited
  - indicate stickied posts
+ - show trending subreddits
+ - allow subreddit subscription updating
+ - sort by hot/top/controversial/new
 
 **Known Bugs**
  - crash on reauthentication
