@@ -19,11 +19,14 @@
         <category android:name="android.intent.category.LAUNCHER" />
       </intent-filter>
     </activity>
-    <activity android:name=".activity.BrowseActivity" >
+    <activity android:name=".activity.BrowseActivity"
+              android:configChanges="orientation|screenSize" >
     </activity>
-    <activity android:name=".activity.ViewingActivity" >
+    <activity android:name=".activity.ViewingActivity"
+              android:configChanges="orientation|screenSize" >
     </activity>
-    <activity android:name=".activity.CommentActivity" >
+    <activity android:name=".activity.CommentActivity"
+              android:configChanges="orientation|screenSize" >
     </activity>
   </application>
 
