@@ -28,6 +28,7 @@ Entirely read-only with no write features (upvoting, downvoting, commenting, pos
  - browse without logging in
  - display if post or comment has been edited
  - indicate stickied posts
+ - don't refresh activity when rotating ListView
 
 **Known Bugs**
  - crash on reauthentication
