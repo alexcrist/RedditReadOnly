@@ -16,6 +16,7 @@ Entirely read-only with no write features (upvoting, downvoting, commenting, pos
  - get link of post on long click
  - subreddit search
  - refresh comments
+ - sort by hot/top/controversial/new
 
 **Feature Wishlist**
  - load all comments
@@ -30,7 +31,7 @@ Entirely read-only with no write features (upvoting, downvoting, commenting, pos
  - indicate stickied posts
  - show trending subreddits
  - allow subreddit subscription updating
- - sort by hot/top/controversial/new
+ - show moderator tags on posts (I could go either way on whether including this is a good idea)
 
 **Known Bugs**
  - crash on reauthentication
