@@ -2,12 +2,23 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
-  <item android:id="@+id/subreddits"
-        android:title="@string/subreddits"
-        android:icon="@drawable/ic_list_white_24dp"
-        app:showAsAction="ifRoom">
+  <item android:id="@+id/sort"
+        android:title="@string/sort"
+        android:icon="@drawable/ic_sort_white_24dp"
+        app:showAsAction="ifRoom" >
 
-    <menu/>
+    <menu>
+
+      <item android:id="@+id/hotSort"
+            android:title="@string/hotSort"/>
+
+      <item android:id="@+id/topSort"
+            android:title="@string/topSort"/>
+
+      <item android:id="@+id/newSort"
+            android:title="@string/newSort"/>
+
+    </menu>
 
   </item>
 
@@ -15,6 +26,14 @@
         android:title="@string/refresh"
         android:icon="@drawable/ic_refresh_white_24dp"
         app:showAsAction="ifRoom"/>
+
+  <item android:id="@+id/subreddits"
+        android:title="@string/mySubreddits"
+        app:showAsAction="never">
+
+    <menu/>
+
+  </item>
 
   <item android:id="@+id/gotoSubreddit"
         android:title="@string/gotoSubreddit"

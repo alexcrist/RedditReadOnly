@@ -40,6 +40,7 @@ import com.gc.materialdesign.views.ProgressBarIndeterminate;
 
 import net.dean.jraw.RedditClient;
 import net.dean.jraw.models.Submission;
+import net.dean.jraw.paginators.Sorting;
 import net.dean.jraw.paginators.SubredditPaginator;
 
 import java.util.ArrayList;
@@ -120,6 +121,18 @@ public class BrowseActivity extends AppCompatActivity implements AdapterView.OnI
   @Override
   public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
+      case R.id.hotSort:
+        setSort(Sorting.HOT);
+        return true;
+
+      case R.id.topSort:
+        setSort(Sorting.TOP);
+        return true;
+
+      case R.id.newSort:
+        setSort(Sorting.NEW);
+        return true;
+
       case R.id.refresh:
         refresh();
         return true;
@@ -294,12 +307,13 @@ public class BrowseActivity extends AppCompatActivity implements AdapterView.OnI
     finish();
     final Intent intent = new Intent(this, LoginActivity.class);
     startActivity(intent);
-    /*((MyApplication) getApplication()).deauthenticate(new PostExecute() {
-      @Override
-      public void onPostExecute() {
-        finish();
-        startActivity(intent);
-      }
-    });*/
+  }
+
+  // Sets sorting method of paginator
+  // -----------------------------------------------------------------------------------------------
+
+  private void setSort(Sorting sorting) {
+    paginator.setSorting(sorting);
+    refresh();
   }
 }

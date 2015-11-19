@@ -2,8 +2,12 @@
   <string name="app_name">Reddit</string>
   <string name="nsfw">nsfw</string>
   <string name="refresh">refresh</string>
-  <string name="subreddits">subreddits</string>
+  <string name="mySubreddits">My subreddits</string>
   <string name="loading">&#8230;</string>
   <string name="logout">Logout</string>
   <string name="gotoSubreddit">Goto subreddit</string>
+  <string name="sort">sort</string>
+  <string name="hotSort">Hot</string>
+  <string name="topSort">Top</string>
+  <string name="newSort">New</string>
 </resources>

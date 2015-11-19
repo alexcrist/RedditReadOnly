@@ -66,7 +66,7 @@ public class LoadSubreddits extends Load<List<String>> {
 
   public static void setSubredditNames(Menu menu, List<String> subredditNames) {
     Collections.sort(subredditNames);
-    Menu subMenu = menu.getItem(0).getSubMenu();
+    Menu subMenu = menu.getItem(2).getSubMenu();
     subMenu.clear();
     for (int i = 0; i < subredditNames.size(); i++) {
       subMenu.addSubMenu(0, i, Menu.NONE, subredditNames.get(i));
