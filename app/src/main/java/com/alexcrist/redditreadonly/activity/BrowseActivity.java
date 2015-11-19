@@ -1,6 +1,7 @@
 package com.alexcrist.redditreadonly.activity;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -42,7 +43,9 @@ import net.dean.jraw.RedditClient;
 import net.dean.jraw.models.Submission;
 import net.dean.jraw.paginators.Sorting;
 import net.dean.jraw.paginators.SubredditPaginator;
+import net.dean.jraw.paginators.TimePeriod;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -126,7 +129,7 @@ public class BrowseActivity extends AppCompatActivity implements AdapterView.OnI
         return true;
 
       case R.id.topSort:
-        setSort(Sorting.TOP);
+        setSortTop();
         return true;
 
       case R.id.newSort:
@@ -315,5 +318,20 @@ public class BrowseActivity extends AppCompatActivity implements AdapterView.OnI
   private void setSort(Sorting sorting) {
     paginator.setSorting(sorting);
     refresh();
+  }
+
+  private void setSortTop() {
+    String[] choices = { "All", "Year", "Month", "Week", "Day", "Hour" };
+    final TimePeriod[] periods = { TimePeriod.ALL, TimePeriod.YEAR, TimePeriod.MONTH,
+        TimePeriod.WEEK, TimePeriod.DAY, TimePeriod.HOUR };
+    new AlertDialog.Builder(this)
+        .setItems(choices, new Dialog.OnClickListener() {
+          @Override
+          public void onClick(DialogInterface dialogInterface, int index) {
+            paginator.setTimePeriod(periods[index]);
+            setSort(Sorting.TOP);
+          }
+        })
+        .show();
   }
 }
